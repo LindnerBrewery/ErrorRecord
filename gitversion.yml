@@ -1,0 +1,34 @@
+mode: Mainline
+major-version-bump-message: '\s?(breaking|major|breaking\schange)'
+minor-version-bump-message: '(features?|minor)\b'
+patch-version-bump-message: '\s?(fix|patch)'
+no-bump-message: '\+semver:\s?(none|skip)'
+branches:
+  develop:
+    tag: alpha
+    increment: Minor
+    regex: ^dev(elop)?(ment)?$
+  main:
+    tag:
+    increment: Patch
+    regex: ^master$|^main$
+  release:
+    tag: beta
+    increment: None
+    regex: ^releases?[/-]
+  feature:
+    tag: alpha
+    increment: Minor
+    regex: ^features?[/-]
+  pull-request:
+    tag: preview
+    increment: Inherit
+    tag-number-pattern: ''
+  hotfix:
+    tag: alpha
+    increment: Patch
+    regex: ^hotfix(es)?[/-]|^patch?[/-]
+  support:
+    tag: alpha
+    increment: Patch
+
