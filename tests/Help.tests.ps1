@@ -10,7 +10,7 @@ BeforeDiscovery {
             'OutBuffer', 'OutVariable', 'PipelineVariable', 'Verbose', 'WarningAction',
             'WarningVariable', 'Confirm', 'Whatif'
         )
-        $params | Where-Object { $_.Name -notin $commonParams } | Sort-Object -Property Name -Unique
+        $params | Where-Object { $_.Name -notin $commonParams } | Sort-object -Property Name -Unique
     }
 
     $manifest             = Import-PowerShellDataFile -Path $env:BHPSModuleManifest
