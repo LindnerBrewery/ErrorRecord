@@ -1,10 +1,46 @@
+using namespace System.Management.Automation
+
+<#
+.SYNOPSIS
+Creates a new ErrorRecord object.
+
+.DESCRIPTION
+The New-ErrorRecord function creates a new ErrorRecord object with the specified error message, category, exception, error ID, target object, recommended action, and inner exception.
+
+.PARAMETER Message
+The error message.
+
+.PARAMETER Category
+The error category. Default value is 'NotSpecified'.
+
+
+.PARAMETER Exception
+The exception type.
+
+.PARAMETER ErrorID
+The error ID. Default value is 'NotSpecified'.
+
+.PARAMETER TargetObject
+The target object.
+
+.PARAMETER RecommendedAction
+The recommended action string.
+
+.PARAMETER InnerException
+The inner exception.
+
+.EXAMPLE
+New-ErrorRecord -Message "An error occurred" -Exception "System.Exception" -ErrorID "12345" -RecommendedAction "Please try again" -InnerException $ex
+
+Creates a new ErrorRecord object with the specified parameters.
+
+#>
 
 Function New-ErrorRecord {
     [CmdletBinding(DefaultParameterSetName = 'default',
         SupportsShouldProcess = $false,
         ConfirmImpact = 'low')]
     Param (
-        # Error message
         [Parameter(Mandatory = $true,
             Position = 0,
             ValueFromPipeline = $true,
@@ -14,35 +50,29 @@ Function New-ErrorRecord {
         [String]
         $Message,
 
-        # Error category
         [Parameter(ParameterSetName = 'default',
             Mandatory = $false)]
         [Management.Automation.ErrorCategory]
         $Category = 'NotSpecified',
 
-        # exception
         [Parameter(ParameterSetName = 'default',
             Mandatory = $true)]
         [string]
         $Exception ,
 
-        # error id
         [Parameter(ParameterSetName = 'default')]
         [string]
         $ErrorID = "NotSpecified",
 
-        # target object
         [Parameter(ParameterSetName = 'default',
             Mandatory = $false)]
         [System.Object]
         $TargetObject = $null,
 
-        # Recommended action string
         [Parameter(ParameterSetName = 'default')]
         [string]
         $RecommendedAction,
 
-        # inner exception
         [Parameter(ParameterSetName = 'default',
             Mandatory = $false)]
         [System.Exception]

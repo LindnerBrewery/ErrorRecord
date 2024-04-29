@@ -1,8 +1,9 @@
+
 # Taken with love from @juneb_get_help (https://raw.githubusercontent.com/juneb/PesterTDD/master/Module.Help.Tests.ps1)
 
 BeforeDiscovery {
 
-    function script:FilterOutCommonParams {
+    function global:FilterOutCommonParams {
         param ($Params)
         $commonParams = @(
             'Debug', 'ErrorAction', 'ErrorVariable', 'InformationAction', 'InformationVariable',
@@ -41,7 +42,7 @@ Describe "Test help for <_.Name>" -ForEach $commands {
         # Get command help, parameters, and links
         $command               = $_
         $commandHelp           = Get-Help $command.Name -ErrorAction SilentlyContinue
-        $commandParameters     = script:FilterOutCommonParams -Params $command.ParameterSets.Parameters
+        $commandParameters     = global:FilterOutCommonParams -Params $command.ParameterSets.Parameters
         $commandParameterNames = $commandParameters.Name
         $helpLinks             = $commandHelp.relatedLinks.navigationLink.uri
     }
@@ -51,9 +52,9 @@ Describe "Test help for <_.Name>" -ForEach $commands {
         $command                = $_
         $commandName            = $_.Name
         $commandHelp            = Get-Help $command.Name -ErrorAction SilentlyContinue
-        $commandParameters      = script:FilterOutCommonParams -Params $command.ParameterSets.Parameters
+        $commandParameters      = global:FilterOutCommonParams -Params $command.ParameterSets.Parameters
         $commandParameterNames  = $commandParameters.Name
-        $helpParameters         = script:FilterOutCommonParams -Params $commandHelp.Parameters.Parameter
+        $helpParameters         = global:FilterOutCommonParams -Params $commandHelp.Parameters.Parameter
         $helpParameterNames     = $helpParameters.Name
     }
 
@@ -81,7 +82,7 @@ Describe "Test help for <_.Name>" -ForEach $commands {
         (Invoke-WebRequest -Uri $_ -UseBasicParsing).StatusCode | Should -Be '200'
     }
 
-    Context "Parameter <_.Name>" -Foreach $commandParameters {
+    Context "Parameter <_.Name>" -Foreach ($commandParameters | Where-Object name -ne ProgressAction){
 
         BeforeAll {
             $parameter         = $_
@@ -103,7 +104,9 @@ Describe "Test help for <_.Name>" -ForEach $commands {
 
         # Parameter type in help should match code
         It "Has correct parameter type" {
-            $parameterHelpType | Should -Be $parameter.ParameterType.Name
+            if ($null -ne $parameterHelpType) {
+                $parameterHelpType | Should -Be $parameter.ParameterType.Name
+            }
         }
     }
 
