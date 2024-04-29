@@ -22,4 +22,16 @@ jobs:
     - name: Test
       shell: pwsh
       run: ./build.ps1 -Task Test -Bootstrap
-
+  publish:
+    name: Run build
+    needs:
+      - test
+    if: ${{success()}}
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: publish
+      shell: pwsh
+      env: 
+        super_secret: ${{ secrets.PSGALLERY_API_KEY }}
+      run: $env:PSGALLERY_API_KEY ; ./build.ps1 -Task Test -Bootstrap
