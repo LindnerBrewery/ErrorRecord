@@ -31,4 +31,3 @@ branches:
   support:
     tag: alpha
     increment: Patch
-

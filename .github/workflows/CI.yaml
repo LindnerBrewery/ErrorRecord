@@ -18,7 +18,7 @@ jobs:
         fetch-depth: 0
     - name: Test GitVersion
       shell: pwsh
-      run: ls $pwd; dotnet-gitversion /config .\gitversion.yml
+      run: ls $pwd; dotnet-gitversion
     - name: Test
       shell: pwsh
       run: ./build.ps1 -Task Test -Bootstrap
