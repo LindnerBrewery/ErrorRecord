@@ -17,10 +17,11 @@ Task UpdateVersion  {
         $prereleaseVersion = ' '
     }
     update-ModuleManifest -Path $file  -ModuleVersion $newVersion -Prerelease $prereleaseVersion
-    $version = Get-ManifestValue -Path $file  -PropertyName moduleversion
-    $prereleaseVersion = Get-ManifestValue -Path $file -PropertyName prerelease -ErrorAction SilentlyContinue
+    $moduledata = Import-PowerShellDataFile -Path $file
+    $moduleversion = $moduledata.ModuleVersion
+    $prereleaseVersion = $moduledata.PrivateData.psdata.prerelease
     if ($prereleaseVersion) {
-        $version = ("{0}-{1}" -f $version, $prereleaseVersion)
+        $moduleversion = ("{0}-{1}" -f $moduleversion, $prereleaseVersion)
     }
-    Write-Host ("Version is: {0}" -f $version)
+    Write-Host ("Version is: {0}" -f $moduleversion)
 } -description 'updates the psd1 version in releases'
