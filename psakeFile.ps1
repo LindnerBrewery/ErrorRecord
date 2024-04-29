@@ -3,6 +3,7 @@ properties {
     $PSBPreference.Build.CompileModule = $false
     $PSBPreference.Help.DefaultLocale = 'en-US'
     $PSBPreference.Test.OutputFile = 'out/testResults.xml'
+    $PSBPreference.General.ModuleVersion = dotnet-gitversion /showvariable MajorMinorPatch
 }
 
 task Default -depends updateversion, build, Test
