@@ -6,9 +6,9 @@ properties {
     $PSBPreference.General.ModuleVersion = dotnet-gitversion /showvariable MajorMinorPatch
 }
 
-task Default -depends updateversion, build, Test
+task Default -depends updateversion, build, pester, Test
 
-task Test -FromModule PowerShellBuild -minimumVersion '0.6.1' -depends UpdateVersion, build
+task Test -FromModule PowerShellBuild -minimumVersion '0.6.1' -depends UpdateVersion, build, pester
 task build -FromModule PowerShellBuild -minimumVersion '0.6.1' -depends UpdateVersion
 Task UpdateVersion  {
     $file = "$env:BHModulePath\$env:BHProjectName.psd1"
