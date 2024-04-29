@@ -7,7 +7,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest, macOS-latest]
     steps:
     - name: Install GitVersion
       uses: gittools/actions/gitversion/setup@v0
@@ -29,9 +29,15 @@ jobs:
     if: ${{success()}}
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v1
+    - name: Install GitVersion
+      uses: gittools/actions/gitversion/setup@v0
+      with:
+        versionSpec: '5.x'
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - name: publish
       shell: pwsh
-      env: 
-        super_secret: ${{ secrets.PSGALLERY_API_KEY }}
+      env:
+        PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
       run: $env:PSGALLERY_API_KEY ; ./build.ps1 -Task Test -Bootstrap
