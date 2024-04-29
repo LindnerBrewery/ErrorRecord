@@ -40,4 +40,4 @@ jobs:
       shell: pwsh
       env:
         PSGALLERY_API_KEY: ${{ secrets.PSGALLERY_API_KEY }}
-      run: $env:PSGALLERY_API_KEY ; ./build.ps1 -Task Test -Bootstrap
+      run: $env:PSGALLERY_API_KEY ; ./build.ps1 -Task Publish -Bootstrap
