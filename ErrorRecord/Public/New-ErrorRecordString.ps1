@@ -25,6 +25,9 @@ The target object.
 .PARAMETER RecommendedAction
 The recommended action string.
 
+.PARAMETER CopyToClipboard
+Copies output to clipboard and not to console.
+
 .EXAMPLE
 New-ErrorRecordString -Message "An error occurred" -Exception "System.Exception" -ErrorID "12345" -RecommendedAction "Please try again" -Category WriteError
 Creates a new ErrorRecord string with the specified parameters.
