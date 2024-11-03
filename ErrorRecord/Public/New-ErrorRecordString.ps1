@@ -78,14 +78,14 @@ Function New-ErrorRecordString {
     begin {}
     process {
         $errorString = "`$err = [System.Management.Automation.ErrorRecord]::new(`n"
-        $errorString += "           [$Exception]::new('$Message'),`n"
+        $errorString += "           [$Exception]::new(`"$Message`"),`n"
         $errorString += "           '$ErrorID',`n"
         $errorString += "           '$Category',`n"
         $errorString += "           $TargetObject`n"
         $errorString += "       )`n"
         if ($recommendedAction) {
-            $errorString += "`$errorDetails = [System.Management.Automation.ErrorDetails]::new('$Message')`n"
-            $errorString += "`$errorDetails.RecommendedAction = '$recommendedAction'`n"
+            $errorString += "`$errorDetails = [System.Management.Automation.ErrorDetails]::new(`"$Message`")`n"
+            $errorString += "`$errorDetails.RecommendedAction = `"$recommendedAction`"`n"
             $errorString += "`$err.ErrorDetails = `$errorDetails"
         }
         if ($CopyToClipboard) {
